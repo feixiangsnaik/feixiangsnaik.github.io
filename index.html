@@ -64,6 +64,46 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-git操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/11/25/git%E6%93%8D%E4%BD%9C/" class="article-date">
+  <time datetime="2021-11-25T11:03:51.000Z" itemprop="datePublished">2021-11-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/11/25/git%E6%93%8D%E4%BD%9C/">git操作</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-基础和常用命令"><a href="#1-基础和常用命令" class="headerlink" title="1.基础和常用命令"></a>1.基础和常用命令</h2><p>git三个区域（工作区，暂存区（git add),版本库(git commit )<br>1.git init,git status,git add .,git commit -m ‘jilu’,git config –global user.email,git config –global user.name<br>2.git log/reflog .   git reset –hard ‘提交编号’</p>
+<h2 id="2-添加到远程"><a href="#2-添加到远程" class="headerlink" title="2.添加到远程"></a>2.添加到远程</h2><p>第一次添加到远程：<br>git init<br>git remote add origin <a target="_blank" rel="noopener" href="https://github.com/feixiangsnaik/feixiangsnaik.io.git">https://github.com/feixiangsnaik/feixiangsnaik.io.git</a><br>git pull –rebase origin main<br>git push -u origin main</p>
+<h2 id="常见报错"><a href="#常见报错" class="headerlink" title="常见报错"></a>常见报错</h2><p>二、常见报错处理<br>1、导致报错:error: You have not concluded your merge (MERGE_HEAD exists).的原因可能是在以前pull下来的代码自动合并失败。<br>　　解决方案一：保留本地的更改，中止合并-&gt;重新合并-&gt;重新拉取<br>$:git merge –abort<br>$:git reset –merge<br>$:git pull<br>　　git pull之后然后重新解决冲突，再push，（记得需要稍微跟自己push的要有一点区别，要不然又会造成这样的情况）<br>　　解决方案二：舍弃本地代码，远端版本覆盖本地版本（慎重）<br>$:git fetch –all<br>$:git reset –hard origin/master<br>$:git fetch<br>2、Git fetch和git pull的区别<br>　　都可以从远程获取最新版本到本地<br>　　git fetch：只是从远程获取最新版本到本地，不会merge(合并)<br>$:git fetch origin master   //从远程的origin的master主分支上获取最新版本到origin/master分支上<br>$:git log -p master..origin/master //比较本地的master分支和origin/master分支的区别<br>$:git merge origin/master          //合并<br>　　Git pull：从远程获取最新版本并merge(合并)到本地<br>$:git pull origin master  //相当于进行了 git fetch 和 git merge两部操作<br>3、本地删除无效的远程分支：清理远程分支，把本地不存在的远程分支删除<br>git remote prune origin</p>
+<h2 id="代码回退等"><a href="#代码回退等" class="headerlink" title="代码回退等"></a>代码回退等</h2><p>git提交之后没有push，代码被覆盖之后恢复<br>git  reflog  通过这个看commit id<br>git reset [commit id] –hard   有时候要删除一个index.lock文件。<br>//git 强制拉代码<br>git fetch –all<br>git reset –hard origin/master<br>git pull //可以省略</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/11/25/git%E6%93%8D%E4%BD%9C/" data-id="ckwev7enc0000se9b2mesedhi" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-css" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/11/25/css/" class="article-date">
@@ -122,7 +162,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="删除某个数组元素"><a href="#删除某个数组元素" class="headerlink" title="删除某个数组元素"></a>删除某个数组元素</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let a = [1,2,3,4,5]</span><br><span class="line">let b = [1,2,3,4,5]</span><br><span class="line">//如果想删除3，就找到第三项，删除1个（下标，个数），如果想替换，那么第三个参数是添加到删除的位置处</span><br><span class="line">a.splice(2,1) //删除3</span><br><span class="line">b.splice(2,1,&#x27;hello&#x27;) //把3换成hello</span><br></pre></td></tr></table></figure>
+        <h2 id="splice"><a href="#splice" class="headerlink" title="splice"></a>splice</h2><h3 id="删除某个数组元素-原数组改变，返回被删除或者被替换的哪个。"><a href="#删除某个数组元素-原数组改变，返回被删除或者被替换的哪个。" class="headerlink" title="删除某个数组元素,原数组改变，返回被删除或者被替换的哪个。"></a>删除某个数组元素,原数组改变，返回被删除或者被替换的哪个。</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let a = [1,2,3,4,5]</span><br><span class="line">let b = [1,2,3,4,5]</span><br><span class="line">//如果想删除3，就找到第三项，删除1个（下标，个数），如果想替换，那么第三个参数是添加到删除的位置处</span><br><span class="line">let aa = a.splice(2,1) //删除3</span><br><span class="line">let bb = b.splice(2,1,&#x27;hello&#x27;) //把3换成hello</span><br><span class="line">console.log(a,b,aa,bb)</span><br></pre></td></tr></table></figure>
+<h2 id="slice"><a href="#slice" class="headerlink" title="slice"></a>slice</h2><h3 id="原数组不变，返回数组为截取的"><a href="#原数组不变，返回数组为截取的" class="headerlink" title="原数组不变，返回数组为截取的"></a>原数组不变，返回数组为截取的</h3><p>```<br>let a = [1,2,3,4,5]<br>let b = a.slice(1,-1)<br>console.log(a,b,’ab’)<br>//a=[1,2,3,4,5] b=[2,3,4]</p>
+
       
     </div>
     <footer class="article-footer">
@@ -289,6 +331,10 @@
       <ul>
         
           <li>
+            <a href="/2021/11/25/git%E6%93%8D%E4%BD%9C/">git操作</a>
+          </li>
+        
+          <li>
             <a href="/2021/11/25/css/">css</a>
           </li>
         
@@ -302,10 +348,6 @@
         
           <li>
             <a href="/2021/11/24/hello-world/">Hello World</a>
-          </li>
-        
-          <li>
-            <a href="/2021/11/16/article-title/">article title</a>
           </li>
         
       </ul>
