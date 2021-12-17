@@ -90,11 +90,27 @@
 </code></pre>
 <h2 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h2><pre><code>hexo new articleTest
 </code></pre>
+<h2 id="搭建步骤"><a href="#搭建步骤" class="headerlink" title="搭建步骤"></a>搭建步骤</h2><p>//第一条   安装hexo的基础框架，如果很慢的话，可以考虑挂下梯子，或者换个源<br>     npm install -g hexo</p>
+<pre><code> //第二条   初始化hexo框架 这个可能会比较慢
+ hexo init
+ 
+ //第三条 安装所需要的组件
+ npm install
+ 
+ //第四条 编译生成静态页面
+ hexo g
+ 
+ //第五条 启动本地服务
+ hexo s
+</code></pre>
+<p>合并：1.     npm install -g hexo &amp;&amp; hexo init &amp;&amp; npm install &amp;&amp;npm i hexo-deployer-git &amp;&amp; hexo g &amp;&amp; hexo s<br>git 步骤：2.git config –global user.name ‘feixiangsnaik’ &amp;&amp;git config –global user.email ‘<a href="mailto:&#x66;&#101;&#105;&#x78;&#105;&#x61;&#x6e;&#x67;&#115;&#110;&#97;&#105;&#x6c;&#64;&#x67;&#109;&#x61;&#x69;&#108;&#x2e;&#x63;&#111;&#x6d;">&#x66;&#101;&#105;&#x78;&#105;&#x61;&#x6e;&#x67;&#115;&#110;&#97;&#105;&#x6c;&#64;&#x67;&#109;&#x61;&#x69;&#108;&#x2e;&#x63;&#111;&#x6d;</a>‘&amp;&amp;ssh-keygen -t rsa -C ‘<a href="mailto:&#x66;&#x65;&#105;&#120;&#x69;&#x61;&#110;&#x67;&#115;&#110;&#x61;&#105;&#108;&#64;&#103;&#x6d;&#97;&#x69;&#108;&#x2e;&#99;&#x6f;&#109;">&#x66;&#x65;&#105;&#120;&#x69;&#x61;&#110;&#x67;&#115;&#110;&#x61;&#105;&#108;&#64;&#103;&#x6d;&#97;&#x69;&#108;&#x2e;&#99;&#x6f;&#109;</a>‘    然后回车到底，把pub的内容拷贝到github ssh里面。<br>3.deploy:<br>  type: git<br>  repository: <a target="_blank" rel="noopener" href="https://github.com/feixiangsnaik/feixiangsnaik.github.io">https://github.com/feixiangsnaik/feixiangsnaik.github.io</a><br>  branch: master<br>把上面代码添加到config.xml最下面<br>4.hexo new post “article title”新建文章，然后 hexo g &amp;&amp; hexo s &amp;&amp;hexo d（或者清除缓存，每次修改配置文件后都要执行该命令<br>  hexo clean</p>
+<p>  // 生成静态页面文件，每次clean后也要重新生成<br>  hexo g</p>
+<p>  // 向仓库推送文件<br>  hexo d）<br>合并：hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/12/16/hexo%E6%93%8D%E4%BD%9C/" data-id="ckx8p3sv70005ei9b6y52fya4" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/12/16/hexo%E6%93%8D%E4%BD%9C/" data-id="ckx9pmhwb0003s79bh09y9svy" class="article-share-link">Share</a>
       
       
     </footer>
@@ -182,7 +198,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/12/16/jwt/" data-id="ckx8p3svb0009ei9b21f9dndh" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/12/16/jwt/" data-id="ckx9pmhwe0006s79bbecj4a3t" class="article-share-link">Share</a>
       
       
     </footer>
@@ -221,7 +237,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/26/%E5%A5%BD%E7%BD%91%E7%AB%99/" data-id="ckx8p3sva0008ei9b1cjn197p" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/26/%E5%A5%BD%E7%BD%91%E7%AB%99/" data-id="ckx9pmhwg0009s79b63z69xqx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -273,7 +289,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/markdown%E5%AD%A6%E4%B9%A0/" data-id="ckx8p3sv80006ei9b5nzr3p6c" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/markdown%E5%AD%A6%E4%B9%A0/" data-id="ckx9pmhwf0008s79bbbgt2rqw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -313,7 +329,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/git%E6%93%8D%E4%BD%9C/" data-id="ckx8p3sv50003ei9b3apyahmp" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/git%E6%93%8D%E4%BD%9C/" data-id="ckx9pmhwc0004s79bbkfwe2zm" class="article-share-link">Share</a>
       
       
     </footer>
@@ -349,7 +365,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/css/" data-id="ckx8p3sv30001ei9b3vue29j3" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/css/" data-id="ckx9pmhw90001s79b9gfo9k3q" class="article-share-link">Share</a>
       
       
     </footer>
@@ -399,7 +415,7 @@ console.log(index)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/js%E6%95%B0%E7%BB%84/" data-id="ckx8p3sv60004ei9ba19j0mpz" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/js%E6%95%B0%E7%BB%84/" data-id="ckx9pmhwd0005s79bhb1jdrl0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -436,7 +452,7 @@ console.log(index)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/less/" data-id="ckx8p3sv90007ei9b01sj7ij5" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/less/" data-id="ckx9pmhwf0007s79bf8hcgtok" class="article-share-link">Share</a>
       
       
     </footer>
@@ -485,7 +501,7 @@ console.log(index)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/24/hello-world/" data-id="ckx8p3sv40002ei9b74sy9113" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/24/hello-world/" data-id="ckx9pmhwa0002s79bcuafguee" class="article-share-link">Share</a>
       
       
     </footer>
@@ -521,7 +537,7 @@ console.log(index)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/16/article-title/" data-id="ckx8p3suz0000ei9b2zi8bbqk" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/16/article-title/" data-id="ckx9pmhw50000s79b93nw0imy" class="article-share-link">Share</a>
       
       
     </footer>
