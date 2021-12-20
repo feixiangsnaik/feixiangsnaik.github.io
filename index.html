@@ -64,6 +64,134 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-watermark" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/12/20/watermark/" class="article-date">
+  <time datetime="2021-12-20T07:50:15.000Z" itemprop="datePublished">2021-12-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/12/20/watermark/">watermark</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="在util目录下创建watermark-js"><a href="#在util目录下创建watermark-js" class="headerlink" title="在util目录下创建watermark.js"></a>在util目录下创建watermark.js</h2><pre><code>  let watermark = &#123;&#125;;
+
+  let id = &quot;set-customer-watermark-id&quot;;
+
+  let setWatermark = (dom, str) =&gt; &#123;
+    if (document.getElementById(id) !== null) &#123;
+      dom
+        ? dom.removeChild(document.getElementById(id))
+        : document.body.removeChild(document.getElementById(id));
+    &#125;
+
+    // 创建一个画布
+    let can = document.createElement(&quot;canvas&quot;);
+    can.width = 200;
+    can.height = 200;
+
+    // 设置画布样式
+    let cans = can.getContext(&quot;2d&quot;);
+    cans.rotate((-30 * Math.PI) / 180);
+    cans.font = &quot;15px Vedana&quot;;
+    cans.fillStyle = &quot;rgba(0,0,0,0.15)&quot;;
+    cans.textAlign = &quot;left&quot;;
+    cans.textBaseline = &quot;Middle&quot;;
+    cans.fillText(str, 0, can.height);
+
+    // 创建整体容器，设置样式
+    let div = document.createElement(&quot;div&quot;);
+    div.id = id;
+    div.style.pointerEvents = &quot;none&quot;;
+    div.style.top = &quot;0px&quot;;
+    div.style.left = &quot;-100px&quot;;
+    div.style.position = &quot;absolute&quot;;
+    div.style.zIndex = &quot;1000&quot;;
+    div.style.width = document.documentElement.clientWidth + &quot;px&quot;;
+    div.style.height = document.documentElement.clientHeight + &quot;px&quot;;
+    div.style.background =
+      &quot;url(&quot; + can.toDataURL(&quot;image/png&quot;) + &quot;) left top repeat&quot;;
+
+    dom ? dom.appendChild(div) : document.body.appendChild(div);
+    return id;
+  &#125;;
+
+  // 设置水印
+  watermark.set = (dom, str) =&gt; &#123;
+    let id = setWatermark(dom, str);
+    setInterval(() =&gt; &#123;
+      if (document.getElementById(id) === null) &#123;
+        id = setWatermark(dom, str);
+      &#125;
+    &#125;, 500);
+    window.onresize = () =&gt; &#123;
+      setWatermark(dom, str);
+    &#125;;
+  &#125;;
+
+  // 清除水印
+  watermark.remove = () =&gt; &#123;
+    if (document.getElementById(id) !== null) &#123;
+      document.getElementById(id).style.display = &quot;none&quot;;
+    &#125;
+  &#125;;
+
+  export default watermark;
+</code></pre>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><pre><code>  &lt;template&gt;
+    &lt;div class=&quot;home&quot; id=&quot;water-mark-content&quot;&gt;
+      &lt;HelloWorld msg=&quot;Welcome to Your Vue.js App&quot; /&gt;
+    &lt;/div&gt;
+  &lt;/template&gt;
+
+  &lt;script&gt;
+  // @ is an alias to /src
+  import HelloWorld from &quot;@/components/HelloWorld.vue&quot;;
+  import Watermark from &quot;@/utils/lib/watermark&quot;;
+
+  export default &#123;
+    name: &quot;Home&quot;,
+    components: &#123;
+      HelloWorld,
+    &#125;,
+    mounted() &#123;
+      this.setWatermark();
+    &#125;,
+    methods: &#123;
+      setWatermark() &#123;
+        const text = `lorretta-2021年9月7日15点37分`;
+        Watermark.set(document.getElementById(&quot;water-mark-content&quot;), text);
+      &#125;,
+    &#125;,
+  &#125;;
+  &lt;/script&gt;
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/12/20/watermark/" data-id="ckxeds0f7000a0w9badon5yxu" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-hexo操作" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/12/16/hexo%E6%93%8D%E4%BD%9C/" class="article-date">
@@ -103,14 +231,14 @@
  //第五条 启动本地服务
  hexo s
 </code></pre>
-<p>合并：1.     npm install -g hexo &amp;&amp; hexo init &amp;&amp; npm install &amp;&amp;npm i hexo-deployer-git &amp;&amp; hexo g &amp;&amp; hexo s<br>git 步骤：2.git config –global user.name ‘feixiangsnaik’ &amp;&amp;git config –global user.email ‘<a href="mailto:&#x66;&#101;&#105;&#x78;&#105;&#x61;&#x6e;&#x67;&#115;&#110;&#97;&#105;&#x6c;&#64;&#x67;&#109;&#x61;&#x69;&#108;&#x2e;&#x63;&#111;&#x6d;">&#x66;&#101;&#105;&#x78;&#105;&#x61;&#x6e;&#x67;&#115;&#110;&#97;&#105;&#x6c;&#64;&#x67;&#109;&#x61;&#x69;&#108;&#x2e;&#x63;&#111;&#x6d;</a>‘&amp;&amp;ssh-keygen -t rsa -C ‘<a href="mailto:&#x66;&#x65;&#105;&#120;&#x69;&#x61;&#110;&#x67;&#115;&#110;&#x61;&#105;&#108;&#64;&#103;&#x6d;&#97;&#x69;&#108;&#x2e;&#99;&#x6f;&#109;">&#x66;&#x65;&#105;&#120;&#x69;&#x61;&#110;&#x67;&#115;&#110;&#x61;&#105;&#108;&#64;&#103;&#x6d;&#97;&#x69;&#108;&#x2e;&#99;&#x6f;&#109;</a>‘    然后回车到底，把pub的内容拷贝到github ssh里面。<br>3.deploy:<br>  type: git<br>  repository: <a target="_blank" rel="noopener" href="https://github.com/feixiangsnaik/feixiangsnaik.github.io">https://github.com/feixiangsnaik/feixiangsnaik.github.io</a><br>  branch: master<br>把上面代码添加到config.xml最下面<br>4.hexo new post “article title”新建文章，然后 hexo g &amp;&amp; hexo s &amp;&amp;hexo d（或者清除缓存，每次修改配置文件后都要执行该命令<br>  hexo clean</p>
+<p>合并：1.     npm install -g hexo &amp;&amp; hexo init &amp;&amp; npm install &amp;&amp;npm i hexo-deployer-git &amp;&amp; hexo g &amp;&amp; hexo s<br>git 步骤：2.git config –global user.name ‘feixiangsnaik’ &amp;&amp;git config –global user.email ‘<a href="mailto:&#x66;&#101;&#105;&#120;&#x69;&#x61;&#x6e;&#x67;&#115;&#x6e;&#97;&#x69;&#x6c;&#64;&#103;&#x6d;&#97;&#x69;&#108;&#46;&#99;&#x6f;&#109;">&#x66;&#101;&#105;&#120;&#x69;&#x61;&#x6e;&#x67;&#115;&#x6e;&#97;&#x69;&#x6c;&#64;&#103;&#x6d;&#97;&#x69;&#108;&#46;&#99;&#x6f;&#109;</a>‘&amp;&amp;ssh-keygen -t rsa -C ‘<a href="mailto:&#x66;&#101;&#x69;&#x78;&#105;&#97;&#110;&#103;&#115;&#110;&#x61;&#105;&#x6c;&#64;&#103;&#x6d;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#109;">&#x66;&#101;&#x69;&#x78;&#105;&#97;&#110;&#103;&#115;&#110;&#x61;&#105;&#x6c;&#64;&#103;&#x6d;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#109;</a>‘    然后回车到底，把pub的内容拷贝到github ssh里面。<br>3.deploy:<br>  type: git<br>  repository: <a target="_blank" rel="noopener" href="https://github.com/feixiangsnaik/feixiangsnaik.github.io">https://github.com/feixiangsnaik/feixiangsnaik.github.io</a><br>  branch: master<br>把上面代码添加到config.xml最下面<br>4.hexo new post “article title”新建文章，然后 hexo g &amp;&amp; hexo s &amp;&amp;hexo d（或者清除缓存，每次修改配置文件后都要执行该命令<br>  hexo clean</p>
 <p>  // 生成静态页面文件，每次clean后也要重新生成<br>  hexo g</p>
 <p>  // 向仓库推送文件<br>  hexo d）<br>合并：hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/12/16/hexo%E6%93%8D%E4%BD%9C/" data-id="ckx9pmhwb0003s79bh09y9svy" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/12/16/hexo%E6%93%8D%E4%BD%9C/" data-id="ckxeds0f400050w9b4i6deijc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -198,7 +326,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/12/16/jwt/" data-id="ckx9pmhwe0006s79bbecj4a3t" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/12/16/jwt/" data-id="ckxeds0f500070w9bb283f7e4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -237,7 +365,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/26/%E5%A5%BD%E7%BD%91%E7%AB%99/" data-id="ckx9pmhwg0009s79b63z69xqx" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/26/%E5%A5%BD%E7%BD%91%E7%AB%99/" data-id="ckxeds0f600090w9b34rk41sg" class="article-share-link">Share</a>
       
       
     </footer>
@@ -289,7 +417,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/markdown%E5%AD%A6%E4%B9%A0/" data-id="ckx9pmhwf0008s79bbbgt2rqw" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/markdown%E5%AD%A6%E4%B9%A0/" data-id="ckxeds0f600080w9b3o72ah6z" class="article-share-link">Share</a>
       
       
     </footer>
@@ -329,7 +457,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/git%E6%93%8D%E4%BD%9C/" data-id="ckx9pmhwc0004s79bbkfwe2zm" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/git%E6%93%8D%E4%BD%9C/" data-id="ckxeds0f100020w9b3sqo6w1n" class="article-share-link">Share</a>
       
       
     </footer>
@@ -365,7 +493,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/css/" data-id="ckx9pmhw90001s79b9gfo9k3q" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/css/" data-id="ckxeds0ev00000w9b61369rfz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -415,7 +543,7 @@ console.log(index)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/js%E6%95%B0%E7%BB%84/" data-id="ckx9pmhwd0005s79bhb1jdrl0" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/js%E6%95%B0%E7%BB%84/" data-id="ckxeds0f200030w9bclvr5h4e" class="article-share-link">Share</a>
       
       
     </footer>
@@ -452,7 +580,7 @@ console.log(index)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/less/" data-id="ckx9pmhwf0007s79bf8hcgtok" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/less/" data-id="ckxeds0f400060w9b4xlo758a" class="article-share-link">Share</a>
       
       
     </footer>
@@ -501,43 +629,7 @@ console.log(index)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/24/hello-world/" data-id="ckx9pmhwa0002s79bcuafguee" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-article-title" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/11/16/article-title/" class="article-date">
-  <time datetime="2021-11-16T05:20:17.000Z" itemprop="datePublished">2021-11-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/11/16/article-title/">article title</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/16/article-title/" data-id="ckx9pmhw50000s79b93nw0imy" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/24/hello-world/" data-id="ckxeds0f300040w9b7mgk1pg9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -548,6 +640,11 @@ console.log(index)
 
   
 
+
+  <nav id="page-nav">
+    
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+  </nav>
 
 </section>
         
@@ -578,6 +675,10 @@ console.log(index)
       <ul>
         
           <li>
+            <a href="/2021/12/20/watermark/">watermark</a>
+          </li>
+        
+          <li>
             <a href="/2021/12/16/hexo%E6%93%8D%E4%BD%9C/">hexo操作</a>
           </li>
         
@@ -591,10 +692,6 @@ console.log(index)
         
           <li>
             <a href="/2021/11/25/markdown%E5%AD%A6%E4%B9%A0/">markdown学习</a>
-          </li>
-        
-          <li>
-            <a href="/2021/11/25/git%E6%93%8D%E4%BD%9C/">git操作</a>
           </li>
         
       </ul>
