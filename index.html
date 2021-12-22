@@ -64,6 +64,43 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-防抖节流" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/12/22/%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/" class="article-date">
+  <time datetime="2021-12-22T08:24:36.000Z" itemprop="datePublished">2021-12-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/12/22/%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/">防抖节流</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="防抖节流"><a href="#防抖节流" class="headerlink" title="防抖节流"></a>防抖节流</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">// 防抖</span><br><span class="line">function debounce(fn, delay=300) &#123;</span><br><span class="line">  //默认300毫秒</span><br><span class="line">  let timer;</span><br><span class="line">  return function() &#123;</span><br><span class="line">    var args = arguments;</span><br><span class="line">    if (timer) &#123;</span><br><span class="line">      clearTimeout(timer);</span><br><span class="line">    &#125;</span><br><span class="line">    timer = setTimeout(() =&gt; &#123;</span><br><span class="line">      fn.apply(this, args); // 改变this指向为调用debounce所指的对象</span><br><span class="line">    &#125;, delay);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">window.addEventListener(</span><br><span class="line">  &quot;scroll&quot;,</span><br><span class="line">  debance(() =&gt; &#123;</span><br><span class="line">    console.log(111);</span><br><span class="line">  &#125;, 1000)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">// 节流</span><br><span class="line">//方法一：设置一个标志</span><br><span class="line">function throttle(fn, delay) &#123;</span><br><span class="line">  let flag = true;</span><br><span class="line">  return () =&gt; &#123;</span><br><span class="line">    if (!flag) return;</span><br><span class="line">    flag = false;</span><br><span class="line">    timer = setTimeout(() =&gt; &#123;</span><br><span class="line">      fn();</span><br><span class="line">      flag = true;</span><br><span class="line">    &#125;, delay);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line">//方法二：使用时间戳</span><br><span class="line">function throttle(fn, delay) &#123;</span><br><span class="line">  let startTime = new Date();</span><br><span class="line">  return () =&gt; &#123;</span><br><span class="line">    let endTime = new Date();</span><br><span class="line">    if (endTime - startTime &gt;= delay) &#123;</span><br><span class="line">      fn();</span><br><span class="line">      startTime = endTime;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      return;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line">window.addEventListener(</span><br><span class="line">  &quot;scroll&quot;,</span><br><span class="line">  throttle(() =&gt; &#123;</span><br><span class="line">    console.log(111);</span><br><span class="line">  &#125;, 1000)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/12/22/%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/" data-id="ckxh9umg5000c779b9neobnuk" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-promise实现" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/12/22/promise%E5%AE%9E%E7%8E%B0/" class="article-date">
@@ -87,9 +124,16 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="promise实现"><a href="#promise实现" class="headerlink" title="promise实现"></a>promise实现</h2><pre><code>// 这里使用es6 class实现
-</code></pre>
-<p>class Mypromise {<br>  constructor (fn) {<br>    // 表示状态<br>    this.state = ‘pending’<br>    // 表示then注册的成功函数<br>    this.successFun = []<br>    // 表示then注册的失败函数<br>    this.failFun = []</p>
-<pre><code>const resolve = val =&gt; &#123;
+class Mypromise &#123;
+  constructor (fn) &#123;
+    // 表示状态
+    this.state = &#39;pending&#39;
+    // 表示then注册的成功函数
+    this.successFun = []
+    // 表示then注册的失败函数
+    this.failFun = []
+
+const resolve = val =&gt; &#123;
   // 保持状态改变不可变（resolve和reject只准触发一种）
   if (this.state !== &#39;pending&#39;) return
   // 成功触发时机  改变状态 同时执行在then注册的回调事件
@@ -209,7 +253,7 @@ static race (promiseArr) &#123;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/12/22/promise%E5%AE%9E%E7%8E%B0/" data-id="ckxh9pssd00091m9b33sp1lwg" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/12/22/promise%E5%AE%9E%E7%8E%B0/" data-id="ckxh9umg20009779b4cky9jiy" class="article-share-link">Share</a>
       
       
     </footer>
@@ -337,7 +381,7 @@ static race (promiseArr) &#123;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/12/20/watermark/" data-id="ckxh9pssd000a1m9bdt0fe6k2" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/12/20/watermark/" data-id="ckxh9umg2000a779b8dnk70cy" class="article-share-link">Share</a>
       
       
     </footer>
@@ -386,14 +430,14 @@ static race (promiseArr) &#123;
  //第五条 启动本地服务
  hexo s
 </code></pre>
-<p>合并：1.     npm install -g hexo &amp;&amp; hexo init &amp;&amp; npm install &amp;&amp;npm i hexo-deployer-git &amp;&amp; hexo g &amp;&amp; hexo s<br>git 步骤：2.git config –global user.name ‘feixiangsnaik’ &amp;&amp;git config –global user.email ‘<a href="mailto:&#x66;&#101;&#x69;&#x78;&#105;&#97;&#110;&#x67;&#x73;&#110;&#x61;&#x69;&#108;&#64;&#103;&#x6d;&#97;&#x69;&#x6c;&#46;&#x63;&#x6f;&#109;">&#x66;&#101;&#x69;&#x78;&#105;&#97;&#110;&#x67;&#x73;&#110;&#x61;&#x69;&#108;&#64;&#103;&#x6d;&#97;&#x69;&#x6c;&#46;&#x63;&#x6f;&#109;</a>‘&amp;&amp;ssh-keygen -t rsa -C ‘<a href="mailto:&#102;&#101;&#105;&#120;&#105;&#x61;&#110;&#103;&#x73;&#x6e;&#x61;&#105;&#108;&#x40;&#x67;&#109;&#97;&#x69;&#x6c;&#x2e;&#x63;&#111;&#109;">&#102;&#101;&#105;&#120;&#105;&#x61;&#110;&#103;&#x73;&#x6e;&#x61;&#105;&#108;&#x40;&#x67;&#109;&#97;&#x69;&#x6c;&#x2e;&#x63;&#111;&#109;</a>‘    然后回车到底，把pub的内容拷贝到github ssh里面。<br>3.deploy:<br>  type: git<br>  repository: <a target="_blank" rel="noopener" href="https://github.com/feixiangsnaik/feixiangsnaik.github.io">https://github.com/feixiangsnaik/feixiangsnaik.github.io</a><br>  branch: master<br>把上面代码添加到config.xml最下面<br>4.hexo new post “article title”新建文章，然后 hexo g &amp;&amp; hexo s &amp;&amp;hexo d（或者清除缓存，每次修改配置文件后都要执行该命令<br>  hexo clean</p>
+<p>合并：1.     npm install -g hexo &amp;&amp; hexo init &amp;&amp; npm install &amp;&amp;npm i hexo-deployer-git &amp;&amp; hexo g &amp;&amp; hexo s<br>git 步骤：2.git config –global user.name ‘feixiangsnaik’ &amp;&amp;git config –global user.email ‘<a href="mailto:&#x66;&#101;&#x69;&#x78;&#x69;&#97;&#x6e;&#x67;&#x73;&#110;&#97;&#x69;&#108;&#64;&#103;&#x6d;&#97;&#x69;&#108;&#46;&#99;&#x6f;&#x6d;">&#x66;&#101;&#x69;&#x78;&#x69;&#97;&#x6e;&#x67;&#x73;&#110;&#97;&#x69;&#108;&#64;&#103;&#x6d;&#97;&#x69;&#108;&#46;&#99;&#x6f;&#x6d;</a>‘&amp;&amp;ssh-keygen -t rsa -C ‘<a href="mailto:&#x66;&#101;&#105;&#120;&#x69;&#97;&#x6e;&#x67;&#115;&#110;&#97;&#x69;&#108;&#x40;&#103;&#x6d;&#x61;&#105;&#108;&#46;&#99;&#111;&#x6d;">&#x66;&#101;&#105;&#120;&#x69;&#97;&#x6e;&#x67;&#115;&#110;&#97;&#x69;&#108;&#x40;&#103;&#x6d;&#x61;&#105;&#108;&#46;&#99;&#111;&#x6d;</a>‘    然后回车到底，把pub的内容拷贝到github ssh里面。<br>3.deploy:<br>  type: git<br>  repository: <a target="_blank" rel="noopener" href="https://github.com/feixiangsnaik/feixiangsnaik.github.io">https://github.com/feixiangsnaik/feixiangsnaik.github.io</a><br>  branch: master<br>把上面代码添加到config.xml最下面<br>4.hexo new post “article title”新建文章，然后 hexo g &amp;&amp; hexo s &amp;&amp;hexo d（或者清除缓存，每次修改配置文件后都要执行该命令<br>  hexo clean</p>
 <p>  // 生成静态页面文件，每次clean后也要重新生成<br>  hexo g</p>
 <p>  // 向仓库推送文件<br>  hexo d）<br>合并：hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/12/16/hexo%E6%93%8D%E4%BD%9C/" data-id="ckxh9pss900041m9bdzv8exjy" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/12/16/hexo%E6%93%8D%E4%BD%9C/" data-id="ckxh9umfz0007779b4b775yp5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -481,7 +525,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/12/16/jwt/" data-id="ckxh9pssb00061m9bgqrug7ok" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/12/16/jwt/" data-id="ckxh9umfw0004779bb7p01ic1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -520,7 +564,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/26/%E5%A5%BD%E7%BD%91%E7%AB%99/" data-id="ckxh9pssf000b1m9bh965e016" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/26/%E5%A5%BD%E7%BD%91%E7%AB%99/" data-id="ckxh9umg4000b779b9y3a8p7v" class="article-share-link">Share</a>
       
       
     </footer>
@@ -572,7 +616,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/markdown%E5%AD%A6%E4%B9%A0/" data-id="ckxh9pssc00081m9bbc7z9155" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/markdown%E5%AD%A6%E4%B9%A0/" data-id="ckxh9umg00008779b9nrhfsa1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -612,7 +656,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/git%E6%93%8D%E4%BD%9C/" data-id="ckxh9pss700021m9bghv51hn6" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/git%E6%93%8D%E4%BD%9C/" data-id="ckxh9umfu0002779b8dx0evym" class="article-share-link">Share</a>
       
       
     </footer>
@@ -648,7 +692,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/css/" data-id="ckxh9pss600011m9bb7ol1vv8" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/css/" data-id="ckxh9umft0001779b28sk5pz7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -698,44 +742,7 @@ console.log(index)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/js%E6%95%B0%E7%BB%84/" data-id="ckxh9pssa00051m9bdke1e6go" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-less" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/11/25/less/" class="article-date">
-  <time datetime="2021-11-25T03:05:02.000Z" itemprop="datePublished">2021-11-25</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/11/25/less/">less</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-混入"><a href="#1-混入" class="headerlink" title="1.混入"></a>1.混入</h2><p>样式混入可以使用混入的方式。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.common-titile&#123;</span><br><span class="line">  color:red;</span><br><span class="line">&#125;</span><br><span class="line">.title&#123;</span><br><span class="line">  .common-titile;</span><br><span class="line">  font-size:20px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/less/" data-id="ckxh9pssc00071m9bcm1t1xdw" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/js%E6%95%B0%E7%BB%84/" data-id="ckxh9umfx0005779bgsite60t" class="article-share-link">Share</a>
       
       
     </footer>
@@ -781,6 +788,10 @@ console.log(index)
       <ul>
         
           <li>
+            <a href="/2021/12/22/%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/">防抖节流</a>
+          </li>
+        
+          <li>
             <a href="/2021/12/22/promise%E5%AE%9E%E7%8E%B0/">promise实现</a>
           </li>
         
@@ -794,10 +805,6 @@ console.log(index)
         
           <li>
             <a href="/2021/12/16/jwt/">jwt</a>
-          </li>
-        
-          <li>
-            <a href="/2021/11/26/%E5%A5%BD%E7%BD%91%E7%AB%99/">好网站</a>
           </li>
         
       </ul>
