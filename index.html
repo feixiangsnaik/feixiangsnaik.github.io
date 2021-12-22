@@ -64,6 +64,161 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-promise实现" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/12/22/promise%E5%AE%9E%E7%8E%B0/" class="article-date">
+  <time datetime="2021-12-22T08:18:48.000Z" itemprop="datePublished">2021-12-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/12/22/promise%E5%AE%9E%E7%8E%B0/">promise实现</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="promise实现"><a href="#promise实现" class="headerlink" title="promise实现"></a>promise实现</h2><pre><code>// 这里使用es6 class实现
+</code></pre>
+<p>class Mypromise {<br>  constructor (fn) {<br>    // 表示状态<br>    this.state = ‘pending’<br>    // 表示then注册的成功函数<br>    this.successFun = []<br>    // 表示then注册的失败函数<br>    this.failFun = []</p>
+<pre><code>const resolve = val =&gt; &#123;
+  // 保持状态改变不可变（resolve和reject只准触发一种）
+  if (this.state !== &#39;pending&#39;) return
+  // 成功触发时机  改变状态 同时执行在then注册的回调事件
+  this.state = &#39;success&#39;
+  console.log(&#39;resolve&#39;)
+  // 为了保证then事件先注册（主要是考虑在promise里面写同步代码） promise规范 这里为模拟异步
+  setTimeout(() =&gt; &#123;
+    // 执行当前事件里面所有的注册函数
+    console.log(&#39;resolve2&#39;, val)
+    this.successFun.forEach(item =&gt; item.call(this, val))
+  &#125;)
+&#125;
+
+const reject = err =&gt; &#123;
+  if (this.state !== &#39;pending&#39;) return
+  // 失败触发时机  改变状态 同时执行在then注册的回调事件
+  this.state = &#39;fail&#39;
+  // 为了保证then事件先注册（主要是考虑在promise里面写同步代码） promise规范 这里模拟异步
+  setTimeout(() =&gt; &#123;
+    this.failFun.forEach(item =&gt; item.call(this, err))
+  &#125;)
+&#125;
+// 调用函数
+try &#123;
+  fn(resolve, reject)
+&#125; catch (error) &#123;
+  reject(error)
+&#125;
+&#125;
+
+// 实例方法 then
+
+then (resolveCallback, rejectCallback) &#123;
+  console.log(&#39;then&#39;)
+  // 判断回调是否是函数
+  resolveCallback = typeof resolveCallback !== &#39;function&#39; ? v =&gt; v : resolveCallback
+  rejectCallback =
+    typeof rejectCallback !== &#39;function&#39;
+      ? err =&gt; &#123;
+        throw err
+      &#125;
+      : rejectCallback
+  // 为了保持链式调用  继续返回promise
+  return new Mypromise((resolve, reject) =&gt; &#123;
+    // 将回调注册到successFun事件集合里面去
+    this.successFun.push(val =&gt; &#123;
+      try &#123;
+        //    执行回调函数
+        const x = resolveCallback(val)
+        // （最难的一点）
+        // 如果回调函数结果是普通值 那么就resolve出去给下一个then链式调用  如果是一个promise对象（代表又是一个异步） 那么调用x的then方法 将resolve和reject传进去 等到x内部的异步 执行完毕的时候（状态完成）就会自动执行传入的resolve 这样就控制了链式调用的顺序
+        x instanceof Mypromise ? x.then(resolve, reject) : resolve(x)
+      &#125; catch (error) &#123;
+        reject(error)
+      &#125;
+    &#125;)
+
+    this.failFun.push(val =&gt; &#123;
+      try &#123;
+        //    执行回调函数
+        const x = rejectCallback(val)
+        x instanceof Mypromise ? x.then(resolve, reject) : reject(x)
+      &#125; catch (error) &#123;
+        reject(error)
+      &#125;
+    &#125;)
+  &#125;)
+&#125;
+
+// 静态方法
+static all (promiseArr) &#123;
+  const result = []
+  // 声明一个计数器 每一个promise返回就加一
+  let count = 0
+  return new Mypromise((resolve, reject) =&gt; &#123;
+    for (let i = 0; i &lt; promiseArr.length; i++) &#123;
+      promiseArr[i].then(
+        res =&gt; &#123;
+          // 这里不能直接push数组  因为要控制顺序一一对应(感谢评论区指正)
+          result[i] = res
+          count++
+          // 只有全部的promise执行成功之后才resolve出去
+          if (count === promiseArr.length) &#123;
+            resolve(result)
+          &#125;
+        &#125;,
+        err =&gt; &#123;
+          reject(err)
+        &#125;
+      )
+    &#125;
+  &#125;)
+&#125;
+
+// 静态方法
+static race (promiseArr) &#123;
+  return new Mypromise((resolve, reject) =&gt; &#123;
+    for (let i = 0; i &lt; promiseArr.length; i++) &#123;
+      promiseArr[i].then(
+        res =&gt; &#123;
+          // promise数组只要有任何一个promise 状态变更  就可以返回
+          resolve(res)
+        &#125;,
+        err =&gt; &#123;
+          reject(err)
+        &#125;
+      )
+    &#125;
+  &#125;)
+&#125;
+</code></pre>
+<p>  }</p>
+<p>  // 使用<br>  const promise1 = new Mypromise((resolve, reject) =&gt; {<br>    setTimeout(() =&gt; {<br>      resolve(123)<br>    }, 2000)<br>  })<br>  const promise2 = new Mypromise((resolve, reject) =&gt; {<br>    setTimeout(() =&gt; {<br>      resolve(1234)<br>    }, 1000)<br>  })</p>
+<p>  Mypromise.all([promise1, promise2]).then(res =&gt; {<br>    console.log(res)<br>  })</p>
+<p>  Mypromise.race([promise1, promise2]).then(res =&gt; {<br>    console.log(res)<br>  })<br>  promise1<br>    .then(<br>      res =&gt; {<br>        console.log(res) // 过两秒输出123<br>        return new Mypromise((resolve, reject) =&gt; {<br>          setTimeout(() =&gt; {<br>            resolve(‘success’)<br>          }, 1000)<br>        })<br>      },<br>      err =&gt; {<br>        console.log(err)<br>      }<br>    )<br>    .then(<br>      res =&gt; {<br>        console.log(res) // 再过一秒输出success<br>      },<br>      err =&gt; {<br>        console.log(err)<br>      }<br>    )</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/12/22/promise%E5%AE%9E%E7%8E%B0/" data-id="ckxh9nie2000aze9b419n98uc" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-watermark" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/12/20/watermark/" class="article-date">
@@ -182,7 +337,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/12/20/watermark/" data-id="ckxeds0f7000a0w9badon5yxu" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/12/20/watermark/" data-id="ckxh9nie10009ze9b8u104wba" class="article-share-link">Share</a>
       
       
     </footer>
@@ -231,14 +386,14 @@
  //第五条 启动本地服务
  hexo s
 </code></pre>
-<p>合并：1.     npm install -g hexo &amp;&amp; hexo init &amp;&amp; npm install &amp;&amp;npm i hexo-deployer-git &amp;&amp; hexo g &amp;&amp; hexo s<br>git 步骤：2.git config –global user.name ‘feixiangsnaik’ &amp;&amp;git config –global user.email ‘<a href="mailto:&#x66;&#101;&#105;&#120;&#x69;&#x61;&#x6e;&#x67;&#115;&#x6e;&#97;&#x69;&#x6c;&#64;&#103;&#x6d;&#97;&#x69;&#108;&#46;&#99;&#x6f;&#109;">&#x66;&#101;&#105;&#120;&#x69;&#x61;&#x6e;&#x67;&#115;&#x6e;&#97;&#x69;&#x6c;&#64;&#103;&#x6d;&#97;&#x69;&#108;&#46;&#99;&#x6f;&#109;</a>‘&amp;&amp;ssh-keygen -t rsa -C ‘<a href="mailto:&#x66;&#101;&#x69;&#x78;&#105;&#97;&#110;&#103;&#115;&#110;&#x61;&#105;&#x6c;&#64;&#103;&#x6d;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#109;">&#x66;&#101;&#x69;&#x78;&#105;&#97;&#110;&#103;&#115;&#110;&#x61;&#105;&#x6c;&#64;&#103;&#x6d;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#109;</a>‘    然后回车到底，把pub的内容拷贝到github ssh里面。<br>3.deploy:<br>  type: git<br>  repository: <a target="_blank" rel="noopener" href="https://github.com/feixiangsnaik/feixiangsnaik.github.io">https://github.com/feixiangsnaik/feixiangsnaik.github.io</a><br>  branch: master<br>把上面代码添加到config.xml最下面<br>4.hexo new post “article title”新建文章，然后 hexo g &amp;&amp; hexo s &amp;&amp;hexo d（或者清除缓存，每次修改配置文件后都要执行该命令<br>  hexo clean</p>
+<p>合并：1.     npm install -g hexo &amp;&amp; hexo init &amp;&amp; npm install &amp;&amp;npm i hexo-deployer-git &amp;&amp; hexo g &amp;&amp; hexo s<br>git 步骤：2.git config –global user.name ‘feixiangsnaik’ &amp;&amp;git config –global user.email ‘<a href="mailto:&#x66;&#x65;&#105;&#x78;&#105;&#97;&#110;&#103;&#115;&#x6e;&#x61;&#105;&#x6c;&#64;&#103;&#x6d;&#x61;&#x69;&#108;&#46;&#x63;&#111;&#109;">&#x66;&#x65;&#105;&#x78;&#105;&#97;&#110;&#103;&#115;&#x6e;&#x61;&#105;&#x6c;&#64;&#103;&#x6d;&#x61;&#x69;&#108;&#46;&#x63;&#111;&#109;</a>‘&amp;&amp;ssh-keygen -t rsa -C ‘<a href="mailto:&#x66;&#x65;&#x69;&#x78;&#105;&#97;&#110;&#x67;&#x73;&#x6e;&#x61;&#105;&#108;&#x40;&#103;&#x6d;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#x6d;">&#x66;&#x65;&#x69;&#x78;&#105;&#97;&#110;&#x67;&#x73;&#x6e;&#x61;&#105;&#108;&#x40;&#103;&#x6d;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#x6d;</a>‘    然后回车到底，把pub的内容拷贝到github ssh里面。<br>3.deploy:<br>  type: git<br>  repository: <a target="_blank" rel="noopener" href="https://github.com/feixiangsnaik/feixiangsnaik.github.io">https://github.com/feixiangsnaik/feixiangsnaik.github.io</a><br>  branch: master<br>把上面代码添加到config.xml最下面<br>4.hexo new post “article title”新建文章，然后 hexo g &amp;&amp; hexo s &amp;&amp;hexo d（或者清除缓存，每次修改配置文件后都要执行该命令<br>  hexo clean</p>
 <p>  // 生成静态页面文件，每次clean后也要重新生成<br>  hexo g</p>
 <p>  // 向仓库推送文件<br>  hexo d）<br>合并：hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/12/16/hexo%E6%93%8D%E4%BD%9C/" data-id="ckxeds0f400050w9b4i6deijc" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/12/16/hexo%E6%93%8D%E4%BD%9C/" data-id="ckxh9nidx0003ze9b27xggry2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -326,7 +481,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/12/16/jwt/" data-id="ckxeds0f500070w9bb283f7e4" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/12/16/jwt/" data-id="ckxh9nidz0006ze9b4mnzgxeh" class="article-share-link">Share</a>
       
       
     </footer>
@@ -365,7 +520,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/26/%E5%A5%BD%E7%BD%91%E7%AB%99/" data-id="ckxeds0f600090w9b34rk41sg" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/26/%E5%A5%BD%E7%BD%91%E7%AB%99/" data-id="ckxh9nie3000bze9b1sfj5gfv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -417,7 +572,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/markdown%E5%AD%A6%E4%B9%A0/" data-id="ckxeds0f600080w9b3o72ah6z" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/markdown%E5%AD%A6%E4%B9%A0/" data-id="ckxh9nie00007ze9bghk6hc8k" class="article-share-link">Share</a>
       
       
     </footer>
@@ -457,7 +612,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/git%E6%93%8D%E4%BD%9C/" data-id="ckxeds0f100020w9b3sqo6w1n" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/git%E6%93%8D%E4%BD%9C/" data-id="ckxh9nidv0001ze9b8pssghko" class="article-share-link">Share</a>
       
       
     </footer>
@@ -493,7 +648,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/css/" data-id="ckxeds0ev00000w9b61369rfz" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/css/" data-id="ckxh9nidr0000ze9b7a8nc18p" class="article-share-link">Share</a>
       
       
     </footer>
@@ -543,7 +698,7 @@ console.log(index)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/js%E6%95%B0%E7%BB%84/" data-id="ckxeds0f200030w9bclvr5h4e" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/js%E6%95%B0%E7%BB%84/" data-id="ckxh9nidz0005ze9bh3nxhci6" class="article-share-link">Share</a>
       
       
     </footer>
@@ -580,56 +735,7 @@ console.log(index)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/less/" data-id="ckxeds0f400060w9b4xlo758a" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/11/24/hello-world/" class="article-date">
-  <time datetime="2021-11-24T12:10:25.817Z" itemprop="datePublished">2021-11-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/11/24/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/24/hello-world/" data-id="ckxeds0f300040w9b7mgk1pg9" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/less/" data-id="ckxh9nie10008ze9b01a41f0n" class="article-share-link">Share</a>
       
       
     </footer>
@@ -675,6 +781,10 @@ console.log(index)
       <ul>
         
           <li>
+            <a href="/2021/12/22/promise%E5%AE%9E%E7%8E%B0/">promise实现</a>
+          </li>
+        
+          <li>
             <a href="/2021/12/20/watermark/">watermark</a>
           </li>
         
@@ -688,10 +798,6 @@ console.log(index)
         
           <li>
             <a href="/2021/11/26/%E5%A5%BD%E7%BD%91%E7%AB%99/">好网站</a>
-          </li>
-        
-          <li>
-            <a href="/2021/11/25/markdown%E5%AD%A6%E4%B9%A0/">markdown学习</a>
           </li>
         
       </ul>
