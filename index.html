@@ -89,11 +89,11 @@
         <h2 id="字母数字组合"><a href="#字母数字组合" class="headerlink" title="字母数字组合"></a>字母数字组合</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]&#123;8,16&#125;$</span><br></pre></td></tr></table></figure>
 <p>分开来注释一下：<br>^ 匹配一行的开头位置<br>(?![0-9]+$) 预测该位置后面不全是数字<br>(?![a-zA-Z]+$) 预测该位置后面不全是字母<br>[0-9A-Za-z] {8,16} 由8-16位数字或这字母组成<br>$ 匹配行结尾位置</p>
 <p>注：(?!xxxx) 是正则表达式的负向零宽断言一种形式，标识预该位置后不是xxxx字符。</p>
-
+<h2 id="不允许输入中文"><a href="#不允许输入中文" class="headerlink" title="不允许输入中文"></a>不允许输入中文</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const keyUp = (e, type) =&gt; &#123;</span><br><span class="line">  // eslint-disable-next-line no-param-reassign</span><br><span class="line">  e.target.value = e.target.value.replace(/[\u4E00-\u9FA5]|[\uFE30-\uFFA0]/g, &#x27;&#x27;)</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/12/23/%E6%AD%A3%E5%88%99%E5%B8%B8%E7%94%A8/" data-id="ckxio2tx9000c1y9ba7kr0ooz" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/12/23/%E6%AD%A3%E5%88%99%E5%B8%B8%E7%94%A8/" data-id="ckxiomup2000cc39b79uefkm4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -130,7 +130,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/12/22/%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/" data-id="ckxio2txa000d1y9besisgvqs" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/12/22/%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/" data-id="ckxiomup3000dc39b6aas5epe" class="article-share-link">Share</a>
       
       
     </footer>
@@ -292,7 +292,7 @@ static race (promiseArr) &#123;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/12/22/promise%E5%AE%9E%E7%8E%B0/" data-id="ckxio2tx8000a1y9bdbyc59ag" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/12/22/promise%E5%AE%9E%E7%8E%B0/" data-id="ckxiomup00009c39b968zcumw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -420,7 +420,7 @@ static race (promiseArr) &#123;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/12/20/watermark/" data-id="ckxio2tx700091y9bd0cldbqi" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/12/20/watermark/" data-id="ckxiomup1000ac39bgjwf34le" class="article-share-link">Share</a>
       
       
     </footer>
@@ -469,14 +469,14 @@ static race (promiseArr) &#123;
  //第五条 启动本地服务
  hexo s
 </code></pre>
-<p>合并：1.     npm install -g hexo &amp;&amp; hexo init &amp;&amp; npm install &amp;&amp;npm i hexo-deployer-git &amp;&amp; hexo g &amp;&amp; hexo s<br>git 步骤：2.git config –global user.name ‘feixiangsnaik’ &amp;&amp;git config –global user.email ‘<a href="mailto:&#x66;&#101;&#x69;&#120;&#x69;&#97;&#x6e;&#x67;&#115;&#x6e;&#97;&#x69;&#108;&#64;&#x67;&#109;&#x61;&#105;&#108;&#x2e;&#99;&#111;&#x6d;">&#x66;&#101;&#x69;&#120;&#x69;&#97;&#x6e;&#x67;&#115;&#x6e;&#97;&#x69;&#108;&#64;&#x67;&#109;&#x61;&#105;&#108;&#x2e;&#99;&#111;&#x6d;</a>‘&amp;&amp;ssh-keygen -t rsa -C ‘<a href="mailto:&#102;&#x65;&#105;&#120;&#x69;&#x61;&#x6e;&#x67;&#x73;&#x6e;&#x61;&#105;&#108;&#x40;&#x67;&#x6d;&#97;&#x69;&#x6c;&#46;&#x63;&#111;&#109;">&#102;&#x65;&#105;&#120;&#x69;&#x61;&#x6e;&#x67;&#x73;&#x6e;&#x61;&#105;&#108;&#x40;&#x67;&#x6d;&#97;&#x69;&#x6c;&#46;&#x63;&#111;&#109;</a>‘    然后回车到底，把pub的内容拷贝到github ssh里面。<br>3.deploy:<br>  type: git<br>  repository: <a target="_blank" rel="noopener" href="https://github.com/feixiangsnaik/feixiangsnaik.github.io">https://github.com/feixiangsnaik/feixiangsnaik.github.io</a><br>  branch: master<br>把上面代码添加到config.xml最下面<br>4.hexo new post “article title”新建文章，然后 hexo g &amp;&amp; hexo s &amp;&amp;hexo d（或者清除缓存，每次修改配置文件后都要执行该命令<br>  hexo clean</p>
+<p>合并：1.     npm install -g hexo &amp;&amp; hexo init &amp;&amp; npm install &amp;&amp;npm i hexo-deployer-git &amp;&amp; hexo g &amp;&amp; hexo s<br>git 步骤：2.git config –global user.name ‘feixiangsnaik’ &amp;&amp;git config –global user.email ‘<a href="mailto:&#102;&#101;&#105;&#120;&#105;&#97;&#x6e;&#103;&#x73;&#110;&#x61;&#x69;&#x6c;&#64;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#46;&#x63;&#x6f;&#109;">&#102;&#101;&#105;&#120;&#105;&#97;&#x6e;&#103;&#x73;&#110;&#x61;&#x69;&#x6c;&#64;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#46;&#x63;&#x6f;&#109;</a>‘&amp;&amp;ssh-keygen -t rsa -C ‘<a href="mailto:&#x66;&#x65;&#x69;&#120;&#105;&#x61;&#110;&#x67;&#115;&#110;&#97;&#x69;&#x6c;&#64;&#103;&#109;&#x61;&#105;&#x6c;&#x2e;&#99;&#x6f;&#109;">&#x66;&#x65;&#x69;&#120;&#105;&#x61;&#110;&#x67;&#115;&#110;&#97;&#x69;&#x6c;&#64;&#103;&#109;&#x61;&#105;&#x6c;&#x2e;&#99;&#x6f;&#109;</a>‘    然后回车到底，把pub的内容拷贝到github ssh里面。<br>3.deploy:<br>  type: git<br>  repository: <a target="_blank" rel="noopener" href="https://github.com/feixiangsnaik/feixiangsnaik.github.io">https://github.com/feixiangsnaik/feixiangsnaik.github.io</a><br>  branch: master<br>把上面代码添加到config.xml最下面<br>4.hexo new post “article title”新建文章，然后 hexo g &amp;&amp; hexo s &amp;&amp;hexo d（或者清除缓存，每次修改配置文件后都要执行该命令<br>  hexo clean</p>
 <p>  // 生成静态页面文件，每次clean后也要重新生成<br>  hexo g</p>
 <p>  // 向仓库推送文件<br>  hexo d）<br>合并：hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/12/16/hexo%E6%93%8D%E4%BD%9C/" data-id="ckxio2tx300031y9bavz7cu46" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/12/16/hexo%E6%93%8D%E4%BD%9C/" data-id="ckxiomuow0004c39bbjohesye" class="article-share-link">Share</a>
       
       
     </footer>
@@ -564,7 +564,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/12/16/jwt/" data-id="ckxio2tx500061y9bhjncaulv" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/12/16/jwt/" data-id="ckxiomuoy0006c39b4mqq9oi2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -603,7 +603,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/26/%E5%A5%BD%E7%BD%91%E7%AB%99/" data-id="ckxio2tx9000b1y9bflx8axbh" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/26/%E5%A5%BD%E7%BD%91%E7%AB%99/" data-id="ckxiomup2000bc39b5xnd2u2a" class="article-share-link">Share</a>
       
       
     </footer>
@@ -655,7 +655,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/markdown%E5%AD%A6%E4%B9%A0/" data-id="ckxio2tx600081y9b6m9p1vro" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/markdown%E5%AD%A6%E4%B9%A0/" data-id="ckxiomuoz0008c39b2yd3er60" class="article-share-link">Share</a>
       
       
     </footer>
@@ -695,7 +695,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/git%E6%93%8D%E4%BD%9C/" data-id="ckxio2tx000011y9bgyu26cid" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/git%E6%93%8D%E4%BD%9C/" data-id="ckxiomuot0001c39b9b3of212" class="article-share-link">Share</a>
       
       
     </footer>
@@ -731,7 +731,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/css/" data-id="ckxio2tx200021y9bhug1hpen" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/css/" data-id="ckxiomuou0002c39b8q373afk" class="article-share-link">Share</a>
       
       
     </footer>
