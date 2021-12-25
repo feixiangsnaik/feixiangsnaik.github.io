@@ -64,6 +64,52 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-docker" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/12/25/docker/" class="article-date">
+  <time datetime="2021-12-25T03:39:29.000Z" itemprop="datePublished">2021-12-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/12/25/docker/">docker</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="常规操作"><a href="#常规操作" class="headerlink" title="常规操作"></a>常规操作</h2><p>mac 安装：   brew install –cask docker<br><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/40523307/brew-install-docker-does-not-include-docker-engine">https://stackoverflow.com/questions/40523307/brew-install-docker-does-not-include-docker-engine</a><br>docker版本查看   docker -v</p>
+<h2 id="安装centos和宝塔"><a href="#安装centos和宝塔" class="headerlink" title="安装centos和宝塔"></a>安装centos和宝塔</h2><p>1.docker pull centos<br>2.docker run -i -t -d –name baota -p 20:20 -p 21:21 -p 80:80 -p 443:443 -p 888:888 -p 8888:8888 –privileged=true -v /home/www:/www centos     如果目录不能访问就换个目录比如（docker run -i -t -d –name baota -p 20:20 -p 21:21 -p 80:80 -p 443:443 -p 888:888 -p 8888:8888 –privileged=true -v /Users/zhangshuai/Desktop/installedsoftware/www:/www centos:7 /usr/sbin/init）<br>3.docker exec -it baota /bin/bash</p>
+<h2 id="宝塔安装"><a href="#宝塔安装" class="headerlink" title="宝塔安装"></a>宝塔安装</h2><p>4.yum install -y wget &amp;&amp; wget -O install.sh <a target="_blank" rel="noopener" href="http://download.bt.cn/install/install.sh">http://download.bt.cn/install/install.sh</a> &amp;&amp; sh install.sh<br>docker-&gt;preferences-&gt;resource-&gt;file sharing</p>
+<h2 id="删除所有已退出的容器"><a href="#删除所有已退出的容器" class="headerlink" title="删除所有已退出的容器"></a>删除所有已退出的容器</h2><p>docker rm $(docker ps -q -f status=exited)</p>
+<p>删除所有已停止的容器<br>docker rm $(docker ps -a -q)</p>
+<h2 id="删除所有正在运行和已停止的容器"><a href="#删除所有正在运行和已停止的容器" class="headerlink" title="删除所有正在运行和已停止的容器"></a>删除所有正在运行和已停止的容器</h2><pre><code>docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+</code></pre>
+<h2 id="删除所有容器，没有任何标准"><a href="#删除所有容器，没有任何标准" class="headerlink" title="删除所有容器，没有任何标准"></a>删除所有容器，没有任何标准</h2><p>docker container rm $(docker container ps -aq)</p>
+<p>但是，在1.13及更高版本中，对于完整的系统和清理，我们可以直接使用以下命令，<br>docker system prune</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/12/25/docker/" data-id="ckxla07gu0002nr9b27gqgfvv" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-正则常用" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/12/23/%E6%AD%A3%E5%88%99%E5%B8%B8%E7%94%A8/" class="article-date">
@@ -93,7 +139,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/12/23/%E6%AD%A3%E5%88%99%E5%B8%B8%E7%94%A8/" data-id="ckxiomup2000cc39b79uefkm4" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/12/23/%E6%AD%A3%E5%88%99%E5%B8%B8%E7%94%A8/" data-id="ckxla07h4000cnr9bge7d4zvj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -130,7 +176,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/12/22/%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/" data-id="ckxiomup3000dc39b6aas5epe" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/12/22/%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/" data-id="ckxla07h7000enr9b9t6b15pm" class="article-share-link">Share</a>
       
       
     </footer>
@@ -292,7 +338,7 @@ static race (promiseArr) &#123;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/12/22/promise%E5%AE%9E%E7%8E%B0/" data-id="ckxiomup00009c39b968zcumw" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/12/22/promise%E5%AE%9E%E7%8E%B0/" data-id="ckxla07h0000anr9b5rff7dr0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -420,7 +466,7 @@ static race (promiseArr) &#123;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/12/20/watermark/" data-id="ckxiomup1000ac39bgjwf34le" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/12/20/watermark/" data-id="ckxla07h3000bnr9b4fa7efc8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -469,14 +515,14 @@ static race (promiseArr) &#123;
  //第五条 启动本地服务
  hexo s
 </code></pre>
-<p>合并：1.     npm install -g hexo &amp;&amp; hexo init &amp;&amp; npm install &amp;&amp;npm i hexo-deployer-git &amp;&amp; hexo g &amp;&amp; hexo s<br>git 步骤：2.git config –global user.name ‘feixiangsnaik’ &amp;&amp;git config –global user.email ‘<a href="mailto:&#102;&#101;&#105;&#120;&#105;&#97;&#x6e;&#103;&#x73;&#110;&#x61;&#x69;&#x6c;&#64;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#46;&#x63;&#x6f;&#109;">&#102;&#101;&#105;&#120;&#105;&#97;&#x6e;&#103;&#x73;&#110;&#x61;&#x69;&#x6c;&#64;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#46;&#x63;&#x6f;&#109;</a>‘&amp;&amp;ssh-keygen -t rsa -C ‘<a href="mailto:&#x66;&#x65;&#x69;&#120;&#105;&#x61;&#110;&#x67;&#115;&#110;&#97;&#x69;&#x6c;&#64;&#103;&#109;&#x61;&#105;&#x6c;&#x2e;&#99;&#x6f;&#109;">&#x66;&#x65;&#x69;&#120;&#105;&#x61;&#110;&#x67;&#115;&#110;&#97;&#x69;&#x6c;&#64;&#103;&#109;&#x61;&#105;&#x6c;&#x2e;&#99;&#x6f;&#109;</a>‘    然后回车到底，把pub的内容拷贝到github ssh里面。<br>3.deploy:<br>  type: git<br>  repository: <a target="_blank" rel="noopener" href="https://github.com/feixiangsnaik/feixiangsnaik.github.io">https://github.com/feixiangsnaik/feixiangsnaik.github.io</a><br>  branch: master<br>把上面代码添加到config.xml最下面<br>4.hexo new post “article title”新建文章，然后 hexo g &amp;&amp; hexo s &amp;&amp;hexo d（或者清除缓存，每次修改配置文件后都要执行该命令<br>  hexo clean</p>
+<p>合并：1.     npm install -g hexo &amp;&amp; hexo init &amp;&amp; npm install &amp;&amp;npm i hexo-deployer-git &amp;&amp; hexo g &amp;&amp; hexo s<br>git 步骤：2.git config –global user.name ‘feixiangsnaik’ &amp;&amp;git config –global user.email ‘<a href="mailto:&#x66;&#x65;&#x69;&#120;&#x69;&#97;&#x6e;&#103;&#x73;&#x6e;&#97;&#x69;&#108;&#64;&#103;&#109;&#97;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#109;">&#x66;&#x65;&#x69;&#120;&#x69;&#97;&#x6e;&#103;&#x73;&#x6e;&#97;&#x69;&#108;&#64;&#103;&#109;&#97;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#109;</a>‘&amp;&amp;ssh-keygen -t rsa -C ‘<a href="mailto:&#x66;&#x65;&#105;&#120;&#105;&#97;&#x6e;&#x67;&#x73;&#110;&#97;&#105;&#x6c;&#64;&#103;&#109;&#97;&#x69;&#108;&#46;&#99;&#x6f;&#x6d;">&#x66;&#x65;&#105;&#120;&#105;&#97;&#x6e;&#x67;&#x73;&#110;&#97;&#105;&#x6c;&#64;&#103;&#109;&#97;&#x69;&#108;&#46;&#99;&#x6f;&#x6d;</a>‘    然后回车到底，把pub的内容拷贝到github ssh里面。<br>3.deploy:<br>  type: git<br>  repository: <a target="_blank" rel="noopener" href="https://github.com/feixiangsnaik/feixiangsnaik.github.io">https://github.com/feixiangsnaik/feixiangsnaik.github.io</a><br>  branch: master<br>把上面代码添加到config.xml最下面<br>4.hexo new post “article title”新建文章，然后 hexo g &amp;&amp; hexo s &amp;&amp;hexo d（或者清除缓存，每次修改配置文件后都要执行该命令<br>  hexo clean</p>
 <p>  // 生成静态页面文件，每次clean后也要重新生成<br>  hexo g</p>
 <p>  // 向仓库推送文件<br>  hexo d）<br>合并：hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/12/16/hexo%E6%93%8D%E4%BD%9C/" data-id="ckxiomuow0004c39bbjohesye" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/12/16/hexo%E6%93%8D%E4%BD%9C/" data-id="ckxla07gw0005nr9b5h7g77k7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -564,7 +610,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/12/16/jwt/" data-id="ckxiomuoy0006c39b4mqq9oi2" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/12/16/jwt/" data-id="ckxla07gy0007nr9beaiv6t1v" class="article-share-link">Share</a>
       
       
     </footer>
@@ -603,7 +649,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/26/%E5%A5%BD%E7%BD%91%E7%AB%99/" data-id="ckxiomup2000bc39b5xnd2u2a" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/26/%E5%A5%BD%E7%BD%91%E7%AB%99/" data-id="ckxla07h6000dnr9bbtcxdtsv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -655,7 +701,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/markdown%E5%AD%A6%E4%B9%A0/" data-id="ckxiomuoz0008c39b2yd3er60" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/markdown%E5%AD%A6%E4%B9%A0/" data-id="ckxla07gz0009nr9b9vslbiam" class="article-share-link">Share</a>
       
       
     </footer>
@@ -695,43 +741,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/git%E6%93%8D%E4%BD%9C/" data-id="ckxiomuot0001c39b9b3of212" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-css" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/11/25/css/" class="article-date">
-  <time datetime="2021-11-25T09:23:01.000Z" itemprop="datePublished">2021-11-25</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/11/25/css/">css</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/css/" data-id="ckxiomuou0002c39b8q373afk" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/git%E6%93%8D%E4%BD%9C/" data-id="ckxla07gv0003nr9b97w56dna" class="article-share-link">Share</a>
       
       
     </footer>
@@ -777,6 +787,10 @@ app.listen(4000);
       <ul>
         
           <li>
+            <a href="/2021/12/25/docker/">docker</a>
+          </li>
+        
+          <li>
             <a href="/2021/12/23/%E6%AD%A3%E5%88%99%E5%B8%B8%E7%94%A8/">正则常用</a>
           </li>
         
@@ -790,10 +804,6 @@ app.listen(4000);
         
           <li>
             <a href="/2021/12/20/watermark/">watermark</a>
-          </li>
-        
-          <li>
-            <a href="/2021/12/16/hexo%E6%93%8D%E4%BD%9C/">hexo操作</a>
           </li>
         
       </ul>
