@@ -12,3 +12,4 @@ tags:
             autoindex on;
         }
 
+## 域名指向端口

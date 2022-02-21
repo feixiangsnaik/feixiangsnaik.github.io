@@ -3,7 +3,7 @@ title: hexo操作
 date: 2021-12-16 16:22:03
 tags:
 ---
-## 发布命令
+## 发布命令 //如果是第一次，必须用ssh的方式才可以。
     hexo clean && hexo g && hexo d
 ## 新建文章
     hexo new articleTest
