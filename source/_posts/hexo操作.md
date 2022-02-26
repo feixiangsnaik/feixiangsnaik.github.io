@@ -5,6 +5,7 @@ tags:
 ---
 ## 发布命令 //如果是第一次，必须用ssh的方式才可以。
     hexo clean && hexo g && hexo d
+    也可以把上面命令放到package.json的脚本里面然后运行，npm start
 ## 新建文章
     hexo new articleTest
 ## 搭建步骤
