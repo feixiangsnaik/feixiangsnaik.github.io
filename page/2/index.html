@@ -64,94 +64,6 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-jwt" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/12/16/jwt/" class="article-date">
-  <time datetime="2021-12-16T08:15:18.000Z" itemprop="datePublished">2021-12-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/12/16/jwt/">jwt</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h2><pre><code>let Koa = require(&#39;koa&#39;);
-let Router = require(&#39;koa-router&#39;);
-let bodyparser = require(&#39;koa-bodyparser&#39;);
-let jwt = require(&#39;jwt-simple&#39;);
-let router = new Router()
-let app = new Koa();
-app.use(bodyparser());
-// 可以自己自定义
-let secret = &#39;zhenglei&#39;;
-// 验证是否登陆
-router.post(&#39;/login&#39;,async(ctx)=&gt;&#123; 
-    let &#123;username,password&#125; = ctx.request.body;
-    if(username === &#39;admin&#39; &amp;&amp; password === &#39;admin&#39;)&#123;
-      // 通常会查数据库，这里简单的演示
-      let token =  jwt.encode(username, secret);
-      ctx.body = &#123;
-            code:200,
-            username,
-            token,
-      &#125;
-    &#125;
-&#125;);
-// 验证是否有权限
-router.get(&#39;/validate&#39;,async(ctx)=&gt;&#123; 
-    let Authorization = ctx.get(&#39;authorization&#39;)
-    let [,token] = Authorization.split(&#39; &#39;);
-    if(token)&#123;
-        try&#123;
-            let r = jwt.decode(token,secret);
-            ctx.body = &#123;
-                code:200,
-                username:r,
-                token
-            &#125;
-        &#125;catch(e)&#123;
-            ctx.body = &#123;
-                code:401,
-                data:&#39;没有登陆&#39;
-            &#125;
-        &#125;
-    &#125;else&#123;
-        ctx.body = &#123;
-            code:401,
-            data:&#39;没有登陆&#39;
-        &#125;
-    &#125;
-  
-&#125;);
-app.use(router.routes());
-app.listen(4000);
-</code></pre>
-<p>作者：腾讯IMWeb团队<br>链接：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6873700061000237069">https://juejin.cn/post/6873700061000237069</a><br>来源：稀土掘金<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/12/16/jwt/" data-id="cl3103izn0007de9b0v5j26qj" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
     <article id="post-好网站" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/11/26/%E5%A5%BD%E7%BD%91%E7%AB%99/" class="article-date">
@@ -181,7 +93,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/26/%E5%A5%BD%E7%BD%91%E7%AB%99/" data-id="cl3103izv000gde9b1o1ge2my" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/26/%E5%A5%BD%E7%BD%91%E7%AB%99/" data-id="cl319289c000f4g9bgyf45ztl" class="article-share-link">Share</a>
       
       
     </footer>
@@ -233,7 +145,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/markdown%E5%AD%A6%E4%B9%A0/" data-id="cl3103izp000ade9b1v5z8one" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/markdown%E5%AD%A6%E4%B9%A0/" data-id="cl3192896000a4g9bcmjd7yl4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -273,7 +185,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/git%E6%93%8D%E4%BD%9C/" data-id="cl3103izl0003de9bg9hgaqqi" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/git%E6%93%8D%E4%BD%9C/" data-id="cl319289100034g9bgj8sfwk8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -309,7 +221,7 @@ app.listen(4000);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/css/" data-id="cl3103izj0001de9bgipid6ng" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/css/" data-id="cl319288y00014g9bgrnwe36a" class="article-share-link">Share</a>
       
       
     </footer>
@@ -359,7 +271,7 @@ console.log(index)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/js%E6%95%B0%E7%BB%84/" data-id="cl3103izn0006de9b5aiih8kf" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/js%E6%95%B0%E7%BB%84/" data-id="cl319289300064g9b8kcoafro" class="article-share-link">Share</a>
       
       
     </footer>
@@ -396,7 +308,7 @@ console.log(index)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/25/less/" data-id="cl3103izp0009de9bfo9ee24t" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/25/less/" data-id="cl319289500094g9beb8h33ny" class="article-share-link">Share</a>
       
       
     </footer>
@@ -445,7 +357,7 @@ console.log(index)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/24/hello-world/" data-id="cl3103izm0004de9b1pe14n47" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/24/hello-world/" data-id="cl319289200044g9babp09k9t" class="article-share-link">Share</a>
       
       
     </footer>
@@ -481,7 +393,7 @@ console.log(index)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/16/article-title/" data-id="cl3103izf0000de9bajgue5ma" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/11/16/article-title/" data-id="cl319288u00004g9b3rxt706i" class="article-share-link">Share</a>
       
       
     </footer>
@@ -527,10 +439,6 @@ console.log(index)
       <ul>
         
           <li>
-            <a href="/2022/05/11/pwdTest/">pwdTest</a>
-          </li>
-        
-          <li>
             <a href="/2022/05/10/mdtest/">mdtest</a>
           </li>
         
@@ -544,6 +452,10 @@ console.log(index)
         
           <li>
             <a href="/2021/12/25/docker/">docker</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/23/%E6%AD%A3%E5%88%99%E5%B8%B8%E7%94%A8/">正则常用</a>
           </li>
         
       </ul>
